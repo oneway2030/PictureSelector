@@ -10,21 +10,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.FileProvider;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
-
+import android.widget.*;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import com.luck.picture.lib.adapter.PictureAlbumDirectoryAdapter;
 import com.luck.picture.lib.adapter.PictureImageGridAdapter;
 import com.luck.picture.lib.config.PictureConfig;
@@ -40,27 +35,19 @@ import com.luck.picture.lib.permissions.RxPermissions;
 import com.luck.picture.lib.rxbus2.RxBus;
 import com.luck.picture.lib.rxbus2.Subscribe;
 import com.luck.picture.lib.rxbus2.ThreadMode;
-import com.luck.picture.lib.tools.DateUtils;
-import com.luck.picture.lib.tools.DoubleUtils;
-import com.luck.picture.lib.tools.PhotoTools;
-import com.luck.picture.lib.tools.PictureFileUtils;
-import com.luck.picture.lib.tools.ScreenUtils;
-import com.luck.picture.lib.tools.SdkVersionUtils;
-import com.luck.picture.lib.tools.StringUtils;
-import com.luck.picture.lib.tools.ToastManage;
+import com.luck.picture.lib.tools.*;
 import com.luck.picture.lib.widget.FolderPopWindow;
 import com.luck.picture.lib.widget.PhotoPopupWindow;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropMulti;
 import com.yalantis.ucrop.model.CutInfo;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 
 /**
  * @author：luck
@@ -880,8 +867,10 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case UCrop.REQUEST_CROP:

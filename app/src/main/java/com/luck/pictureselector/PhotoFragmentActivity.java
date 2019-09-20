@@ -2,13 +2,11 @@ package com.luck.pictureselector;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.permissions.RxPermissions;
 import com.luck.picture.lib.tools.PictureFileUtils;
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -33,6 +31,7 @@ public class PhotoFragmentActivity extends AppCompatActivity {
         // 清空图片缓存，包括裁剪、压缩后的图片 注意:必须要在上传完成后调用 必须要获取权限
         RxPermissions permissions = new RxPermissions(this);
         permissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Observer<Boolean>() {
+
             @Override
             public void onSubscribe(Disposable d) {
             }

@@ -10,10 +10,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.luck.picture.lib.compress.Luban;
 import com.luck.picture.lib.compress.OnCompressListener;
 import com.luck.picture.lib.config.PictureConfig;
@@ -26,31 +25,24 @@ import com.luck.picture.lib.entity.LocalMediaFolder;
 import com.luck.picture.lib.immersive.ImmersiveManage;
 import com.luck.picture.lib.rxbus2.RxBus;
 import com.luck.picture.lib.rxbus2.RxUtils;
-import com.luck.picture.lib.tools.AttrsUtils;
-import com.luck.picture.lib.tools.DateUtils;
-import com.luck.picture.lib.tools.DoubleUtils;
-import com.luck.picture.lib.tools.PictureFileUtils;
-import com.luck.picture.lib.tools.SdkVersionUtils;
+import com.luck.picture.lib.tools.*;
 import com.yalantis.ucrop.UCrop;
 import com.yalantis.ucrop.UCropMulti;
 import com.yalantis.ucrop.util.BitmapUtils;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author：luck
  * @data：2018/3/28 下午1:00
  * @描述: Activity基类
  */
-public class PictureBaseActivity extends FragmentActivity {
+public class PictureBaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected PictureSelectionConfig config;
     protected boolean openWhiteStatusBar, numComplete;

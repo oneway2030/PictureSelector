@@ -3,15 +3,14 @@ package com.luck.picture.lib;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 import com.luck.picture.lib.adapter.SimpleFragmentAdapter;
 import com.luck.picture.lib.anim.OptAnimationLoader;
 import com.luck.picture.lib.config.PictureConfig;
@@ -437,6 +436,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case UCropMulti.REQUEST_MULTI_CROP:
@@ -454,7 +454,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
             }
         } else if (resultCode == UCrop.RESULT_ERROR) {
             Throwable throwable = (Throwable) data.getSerializableExtra(UCrop.EXTRA_ERROR);
-            ToastManage.s(mContext,throwable.getMessage());
+            ToastManage.s(mContext, throwable.getMessage());
         }
     }
 

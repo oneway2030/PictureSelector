@@ -10,42 +10,23 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IdRes;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
+import androidx.annotation.*;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.yalantis.ucrop.callback.BitmapCropCallback;
 import com.yalantis.ucrop.model.AspectRatio;
 import com.yalantis.ucrop.model.CutInfo;
 import com.yalantis.ucrop.util.FileUtils;
 import com.yalantis.ucrop.util.SelectedStateListDrawable;
-import com.yalantis.ucrop.view.CropImageView;
-import com.yalantis.ucrop.view.GestureCropImageView;
-import com.yalantis.ucrop.view.OverlayView;
-import com.yalantis.ucrop.view.TransformImageView;
-import com.yalantis.ucrop.view.UCropView;
+import com.yalantis.ucrop.view.*;
 import com.yalantis.ucrop.view.widget.AspectRatioTextView;
 import com.yalantis.ucrop.view.widget.HorizontalProgressWheelView;
 
@@ -376,7 +357,7 @@ public class PictureMultiCuttingActivity extends AppCompatActivity {
     private void setupAppBar() {
         setStatusBarColor(mStatusBarColor);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
 
         // Set all of the Toolbar coloring
         toolbar.setBackgroundColor(mToolbarColor);

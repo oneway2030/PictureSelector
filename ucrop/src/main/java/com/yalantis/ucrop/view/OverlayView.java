@@ -2,19 +2,14 @@ package com.yalantis.ucrop.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.RectF;
-import android.graphics.Region;
+import android.graphics.*;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntRange;
 import com.yalantis.ucrop.R;
 import com.yalantis.ucrop.callback.OverlayViewChangeListener;
 import com.yalantis.ucrop.util.RectUtils;
