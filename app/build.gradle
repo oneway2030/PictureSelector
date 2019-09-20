@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
-
+def lib = rootProject.ext.dependencies
+def versionConfig = rootProject.ext.versionConfig
 android {
-    compileSdkVersion cfgs.compileSdkVersion
-
+    compileSdkVersion versionConfig.compileSdkVersion
     defaultConfig {
+        minSdkVersion versionConfig.minSdkVersion
+        targetSdkVersion versionConfig.targetSdkVersion
         applicationId "com.luck.pictureselector"
-        minSdkVersion cfgs.minSdkVersion
-        targetSdkVersion cfgs.targetSdkVersion
-        versionCode cfgs.versionCode
-        versionName cfgs.versionName
+        versionCode 1
+        versionName "1.0.0"
     }
     buildTypes {
         release {

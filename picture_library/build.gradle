@@ -1,13 +1,14 @@
 apply plugin: 'com.android.library'
+def lib = rootProject.ext.dependencies
+def versionConfig = rootProject.ext.versionConfig
 
 android {
-    compileSdkVersion cfgs.compileSdkVersion
-
+    compileSdkVersion versionConfig.compileSdkVersion
     defaultConfig {
-        minSdkVersion cfgs.minSdkVersion
-        targetSdkVersion cfgs.targetSdkVersion
-        versionCode cfgs.versionCode
-        versionName cfgs.versionName
+        minSdkVersion versionConfig.minSdkVersion
+        targetSdkVersion versionConfig.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
     }
 
     compileOptions {
