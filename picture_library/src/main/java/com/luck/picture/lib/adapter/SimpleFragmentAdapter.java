@@ -10,17 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.viewpager.widget.PagerAdapter;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.luck.picture.lib.PictureVideoPlayActivity;
 import com.luck.picture.lib.R;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.loader.AlbumImageLoaderManager;
+import com.luck.picture.lib.loader.LoadBitmapListener;
 import com.luck.picture.lib.photoview.OnViewTapListener;
 import com.luck.picture.lib.photoview.PhotoView;
 import com.luck.picture.lib.widget.longimage.ImageSource;
@@ -104,32 +100,18 @@ public class SimpleFragmentAdapter extends PagerAdapter {
             longImg.setVisibility(eqLongImg && !isGif ? View.VISIBLE : View.GONE);
             // 压缩过的gif就不是gif了
             if (isGif && !media.isCompressed()) {
-                RequestOptions gifOptions = new RequestOptions()
-                        .override(480, 800)
-                        .priority(Priority.HIGH)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE);
-                Glide.with(contentView.getContext())
-                        .asGif()
-                        .load(path)
-                        .apply(gifOptions)
-                        .into(imageView);
+                AlbumImageLoaderManager.getLoader().loadNoCacheAsGit(contentView.getContext(), path, imageView, 480, 800);
             } else {
-                RequestOptions options = new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL);
-                Glide.with(contentView.getContext())
-                        .asBitmap()
-                        .load(path)
-                        .apply(options)
-                        .into(new SimpleTarget<Bitmap>(480, 800) {
-                            @Override
-                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                if (eqLongImg) {
-                                    displayLongPic(resource, longImg);
-                                } else {
-                                    imageView.setImageBitmap(resource);
-                                }
-                            }
-                        });
+                AlbumImageLoaderManager.getLoader().getBitmap(contentView.getContext(), path, new LoadBitmapListener() {
+                    @Override
+                    public void onResourceReady(Bitmap resource) {
+                        if (eqLongImg) {
+                            displayLongPic(resource, longImg);
+                        } else {
+                            imageView.setImageBitmap(resource);
+                        }
+                    }
+                });
             }
             imageView.setOnViewTapListener(new OnViewTapListener() {
                 @Override

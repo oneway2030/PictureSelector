@@ -1,23 +1,17 @@
 package com.luck.picture.lib.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.luck.picture.lib.R;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.entity.LocalMediaFolder;
+import com.luck.picture.lib.loader.AlbumImageLoaderManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,26 +68,7 @@ public class PictureAlbumDirectoryAdapter extends RecyclerView.Adapter<PictureAl
         if (mimeType == PictureMimeType.ofAudio()) {
             holder.first_image.setImageResource(R.drawable.audio_placeholder);
         } else {
-            RequestOptions options = new RequestOptions()
-                    .placeholder(R.drawable.ic_placeholder)
-                    .centerCrop()
-                    .sizeMultiplier(0.5f)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .override(160, 160);
-            Glide.with(holder.itemView.getContext())
-                    .asBitmap()
-                    .load(imagePath)
-                    .apply(options)
-                    .into(new BitmapImageViewTarget(holder.first_image) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.
-                                            create(mContext.getResources(), resource);
-                            circularBitmapDrawable.setCornerRadius(8);
-                            holder.first_image.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+            AlbumImageLoaderManager.getLoader().loadRoundImageAsBitmap(holder.itemView.getContext(),imagePath,holder.first_image,R.drawable.ic_placeholder,160, 160,0.5f);
         }
         holder.image_num.setText("(" + imageNum + ")");
         holder.tv_folder_name.setText(name);

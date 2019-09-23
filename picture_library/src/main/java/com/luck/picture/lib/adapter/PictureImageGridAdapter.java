@@ -16,15 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.luck.picture.lib.R;
 import com.luck.picture.lib.anim.OptAnimationLoader;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.config.PictureSelectionConfig;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.loader.AlbumImageLoaderManager;
 import com.luck.picture.lib.tools.*;
 
 import java.io.File;
@@ -179,20 +177,7 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
             if (mimeType == PictureMimeType.ofAudio()) {
                 contentHolder.iv_picture.setImageResource(R.drawable.audio_placeholder);
             } else {
-                RequestOptions options = new RequestOptions();
-                if (overrideWidth <= 0 && overrideHeight <= 0) {
-                    options.sizeMultiplier(sizeMultiplier);
-                } else {
-                    options.override(overrideWidth, overrideHeight);
-                }
-                options.diskCacheStrategy(DiskCacheStrategy.ALL);
-                options.centerCrop();
-                options.placeholder(R.drawable.image_placeholder);
-                Glide.with(context)
-                        .asBitmap()
-                        .load(path)
-                        .apply(options)
-                        .into(contentHolder.iv_picture);
+                AlbumImageLoaderManager.getLoader().loadImageAsBitmap(context, path, contentHolder.iv_picture, R.drawable.image_placeholder, overrideWidth, overrideHeight, sizeMultiplier);
             }
             if (enablePreview || enablePreviewVideo || enablePreviewAudio) {
                 contentHolder.ll_check.setOnClickListener(new View.OnClickListener() {

@@ -2,6 +2,7 @@ package com.luck.pictureselector;
 
 import android.app.Application;
 
+import com.luck.picture.lib.loader.AlbumImageLoaderManager;
 import com.squareup.leakcanary.LeakCanary;
 
 
@@ -24,5 +25,7 @@ public class App extends Application {
         }
         LeakCanary.install(this);
         LeakCanary.install(this);
+        //自定义图片实现
+        AlbumImageLoaderManager.setLoader(new CustomImageLoaderMpl());
     }
 }
