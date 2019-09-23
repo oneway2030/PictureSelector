@@ -1,14 +1,19 @@
 package com.luck.picture.lib;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.loader.AlbumImageLoaderManager;
 import com.luck.picture.lib.tools.DoubleUtils;
+import com.yalantis.ucrop.load.ImageLoader;
+import com.yalantis.ucrop.load.UcropImageLoaderManager;
 
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
@@ -40,6 +45,13 @@ public final class PictureSelector {
     private PictureSelector(Activity activity, Fragment fragment) {
         mActivity = new WeakReference<>(activity);
         mFragment = new WeakReference<>(fragment);
+        //初始化Ucrop库中的图片加载
+        UcropImageLoaderManager.setInstance(new ImageLoader() {
+            @Override
+            public void loadImage(Context context, Object path, ImageView tragetIv, int placeholderResId) {
+                AlbumImageLoaderManager.getLoader().loadImage(context, path, tragetIv, placeholderResId);
+            }
+        });
     }
 
     /**

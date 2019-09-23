@@ -22,10 +22,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
+import com.yalantis.ucrop.load.ImageLoader;
+import com.yalantis.ucrop.load.UcropImageLoaderManager;
 import com.yalantis.ucrop.model.CutInfo;
 
 import java.util.ArrayList;
@@ -76,17 +74,10 @@ public class PicturePhotoGalleryAdapter extends RecyclerView.Adapter<PicturePhot
         } else {
             holder.iv_dot.setVisibility(View.GONE);
         }
-
-        RequestOptions options = new RequestOptions()
-                .placeholder(R.color.ucrop_color_grey)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL);
-
-        Glide.with(context)
-                .load(path)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(options)
-                .into(holder.mIvPhoto);
+        ImageLoader loader = UcropImageLoaderManager.getLoader();
+        if (loader != null) {
+            loader.loadImage(context, path, holder.mIvPhoto, R.color.ucrop_color_grey);
+        }
     }
 
 

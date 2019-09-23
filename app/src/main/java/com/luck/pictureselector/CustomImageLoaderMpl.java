@@ -14,6 +14,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.load.resource.gif.GifDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,19 +22,33 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.luck.picture.lib.loader.ILoader;
 import com.luck.picture.lib.loader.AlbumImageLoaderManager;
+import com.luck.picture.lib.loader.ImageLoader;
 import com.luck.picture.lib.loader.LoadBitmapListener;
 import com.luck.picture.lib.loader.LoadGifListener;
 
 /**
  * 默认的  图片加载实现
  * 自定义图片实现
- * 1.如果需要自定义加载器, 需要实现接口 {@link ILoader},
- * 2.并在App初始化中调用setLoader {@link AlbumImageLoaderManager#setLoader(ILoader)}
+ * 1.如果需要自定义加载器, 需要实现接口 {@link ImageLoader},
+ * 2.并在App初始化中调用setLoader {@link AlbumImageLoaderManager#setLoader(ImageLoader)}
  * 3.具体实现,可以参照此框架内默认实现示列 {@link CustomImageLoaderMpl}
  */
-public class CustomImageLoaderMpl implements ILoader {
+public class CustomImageLoaderMpl implements ImageLoader {
+
+    @Override
+    public void loadImage(Context context, Object path, ImageView tragetIv, int placeholderResId) {
+        RequestOptions options = new RequestOptions()
+                .placeholder(placeholderResId)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
+        Glide.with(context)
+                .load(path)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .apply(options)
+                .into(tragetIv);
+    }
+
     @Override
     public void loadNoCacheAsGit(Context context, Object path, ImageView tragetIv, int overrideWidth, int overrideHeight) {
         RequestOptions gifOptions = new RequestOptions()
@@ -48,7 +63,7 @@ public class CustomImageLoaderMpl implements ILoader {
     }
 
     @Override
-    public void getNoCacheAsGitAndListener(Activity context, Object path, ImageView tragetIv, int overrideWidth, int overrideHeight, LoadGifListener listener) {
+    public void getNoCacheAsGitAndListener(Activity context, Object path, ImageView tragetIv, int overrideWidth, int overrideHeight, final LoadGifListener listener) {
         RequestOptions gifOptions = new RequestOptions()
                 .override(overrideWidth, overrideHeight)
                 .priority(Priority.HIGH)
@@ -77,7 +92,7 @@ public class CustomImageLoaderMpl implements ILoader {
     }
 
     @Override
-    public void getBitmap(Context context, Object path, LoadBitmapListener listener) {
+    public void getBitmap(Context context, Object path, final LoadBitmapListener listener) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         Glide.with(context)
@@ -124,7 +139,7 @@ public class CustomImageLoaderMpl implements ILoader {
     }
 
     @Override
-    public void loadRoundImageAsBitmap(Context context, Object path, ImageView tragetIv, int placeholderResId, int overrideWidth, int overrideHeight, float sizeMultiplier) {
+    public void loadRoundImageAsBitmap(final Context context, Object path, final ImageView tragetIv, int placeholderResId, int overrideWidth, int overrideHeight, float sizeMultiplier) {
         RequestOptions options = new RequestOptions()
                 .placeholder(placeholderResId)
                 .centerCrop()
@@ -146,4 +161,5 @@ public class CustomImageLoaderMpl implements ILoader {
                     }
                 });
     }
+
 }
