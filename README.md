@@ -74,7 +74,7 @@
 
 ```
 dependencies {
-    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.4'
+     implementation 'com.github.oneway2030:PictureSelector:V1.0.0'
 }
 
 ```
@@ -90,27 +90,6 @@ allprojects {
 }
 ```
 
-方式二 maven引入
-
-step 1.
-```
-<repositories>
-       <repository>
-       <id>jitpack.io</id>
-	<url>https://jitpack.io</url>
-       </repository>
- </repositories>
-```
-step 2.
-```
-
-<dependency>
-      <groupId>com.github.LuckSiege.PictureSelector</groupId>
-      <artifactId>picture_library</artifactId>
-      <version>v2.2.4</version> 
-</dependency>
-
-```
 
 ## 常见错误
 ```
